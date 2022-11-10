@@ -1,4 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+* {
+   box-sizing: border-box;
+}
+
 main {
+    margin: 40px auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
@@ -9,9 +16,73 @@ main {
     border-radius: 5px;
     cursor: pointer;
     display: flex;
+    height: 200px;
     flex-direction: column;
     overflow: hidden;
     transition: box-shadow 0.2s ease-out;
+}
+
+.inner-card {
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease;
+}
+
+.card.show-answer .inner-card {
+    transform: rotateY(180deg);
+}
+
+
+.inner-card-front,
+.inner-card-back {
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+}
+
+.inner-card-front {
+    transform: rotateY(0deg);
+    z-index: 2;
+}
+
+.inner-card-back.letter {
+    font-size: 86px;
+    background-color:aliceblue;
+    transform: rotateY(180deg);
+}
+
+.inner-card-back.picture {
+    display: flex;
+    flex-direction: column;
+    transform: rotateY(180deg);
+}
+
+.pic {
+    width: 100%;
+    object-fit: cover;
+    height: 150px;
+}
+
+.inner-card-back.picture p {
+    font-family:'Permanent Marker', sans-serif;
+    font-size: 25px;
+    letter-spacing: 1px;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+    height: 100%;
 }
 
 @media(max-width: 1100px) {
