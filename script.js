@@ -1,5 +1,5 @@
 const main = document.querySelector('main')
-
+const message = new SpeechSynthesisUtterance();
 const letterCards = [];
 const wordCards = [];
 
@@ -16,6 +16,17 @@ const shuffle = (array) => {
     array[j] = temp;
   }
 };
+
+// set text for speech
+function setTextMessage (text) {
+  message.text = text;
+}
+
+//speak text
+function speakText () {
+  speechSynthesis.speak(message)
+}
+
 
 const createLetterCard = (letter) => {
   const card = document.createElement('div');
@@ -38,6 +49,8 @@ const createLetterCard = (letter) => {
     if (card.classList.contains('clickable')) {
       // card.classList.remove('clickable')
       card.classList.toggle('revealed')
+      setTextMessage(letter[0])
+      setTimeout(speakText, 400)
     }
   })
 
@@ -67,6 +80,8 @@ const createWordCard = (data) => {
     if (card.classList.contains('clickable')) {
       // card.classList.remove('clickable')
       card.classList.toggle('revealed')
+        setTextMessage(text)
+      setTimeout(speakText, 400)
     }
   })
 
