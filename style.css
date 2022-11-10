@@ -5,7 +5,6 @@
 }
 
 main {
-    margin: 40px auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
@@ -36,6 +35,9 @@ main {
     transform: rotateY(180deg);
 }
 
+.matched {
+    box-shadow: 0 0 10px 5px green;
+}
 
 .inner-card-front,
 .inner-card-back {

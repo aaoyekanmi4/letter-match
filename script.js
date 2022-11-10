@@ -1,7 +1,12 @@
 const main = document.querySelector('main')
+
 const message = new SpeechSynthesisUtterance();
+
 const letterCards = [];
 const wordCards = [];
+const revealedCards = [];
+let wordCardRevealed = false;
+let letterCardRevealed = false;
 
 //Fisher Yates shuffle
 const shuffle = (array) => {
@@ -27,6 +32,31 @@ function speakText () {
   speechSynthesis.speak(message)
 }
 
+const lettersMatch = (cardsList) => {
+  return cardsList[0][0] === cardsList[1][0]
+}
+
+//check for match
+const checkForMatch = () => {
+const cards = document.querySelectorAll('.card')
+  cards.forEach((card) => card.classList.remove('clickable'))
+  const revealedCardsList = document.querySelectorAll('.revealed')
+
+  if ((wordCardRevealed && letterCardRevealed) && lettersMatch(revealedCardsList)) {
+
+  //revealedCards add class to show match
+    revealedCardsList.forEach((card) => card.classList.add('matched'))
+  //play success sound
+  //remove cards from dom
+  //put clickable back on all cards
+  //toggle revealed on revealed list
+  }
+
+//else play sound for being wrong
+  //toggle revealed on revealed list
+//flip cards back over
+//put clickable back on all cards
+}
 
 const createLetterCard = (letter) => {
   const card = document.createElement('div');
@@ -47,10 +77,14 @@ const createLetterCard = (letter) => {
 `
   card.addEventListener('click', () => {
     if (card.classList.contains('clickable')) {
-      // card.classList.remove('clickable')
+      card.classList.remove('clickable')
       card.classList.toggle('revealed')
+      letterCardRevealed = true;
       setTextMessage(letter[0])
-      setTimeout(speakText, 400)
+       setTimeout(speakText, 400)
+      revealedCards.push(card)
+      if (revealedCards.length === 2) checkForMatch()
+
     }
   })
 
@@ -78,20 +112,25 @@ const createWordCard = (data) => {
 
   card.addEventListener('click', () => {
     if (card.classList.contains('clickable')) {
-      // card.classList.remove('clickable')
+      card.classList.remove('clickable')
       card.classList.toggle('revealed')
-        setTextMessage(text)
+      wordCardRevealed = true;
+      setTextMessage(text)
       setTimeout(speakText, 400)
+      revealedCards.push(card)
+      //change to use NodeListwww
+      if (revealedCards.length === 2) checkForMatch()
     }
   })
 
   wordCards.push(card)
 }
 
+
 letterData.forEach((letter) => createLetterCard(letter))
 wordData.forEach((word) => createWordCard(word))
 
 const allCards = [...letterCards, ...wordCards]
-shuffle(allCards)
+// shuffle(allCards)
 allCards.forEach((card) => main.appendChild(card))
 
