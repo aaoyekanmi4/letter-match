@@ -3,6 +3,20 @@ const main = document.querySelector('main')
 const letterCards = [];
 const wordCards = [];
 
+//Fisher Yates shuffle
+const shuffle = (array) => {
+  var i = 0,
+    j = 0,
+    temp = null;
+
+  for (i = array.length - 1; i > 0; i -= 1) {
+    j = Math.floor(Math.random() * (i + 1));
+    temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+};
+
 const createLetterCard = (letter) => {
   const card = document.createElement('div');
   card.classList.add('card', 'clickable')
@@ -48,7 +62,7 @@ const createWordCard = (data) => {
                 </div>
             </div>
 `
-  
+
   card.addEventListener('click', () => {
     if (card.classList.contains('clickable')) {
       // card.classList.remove('clickable')
@@ -60,7 +74,9 @@ const createWordCard = (data) => {
 }
 
 letterData.forEach((letter) => createLetterCard(letter))
-letterCards.forEach((card) => main.appendChild(card))
-
 wordData.forEach((word) => createWordCard(word))
-wordCards.forEach((card) => main.appendChild(card))
+
+const allCards = [...letterCards, ...wordCards]
+shuffle(allCards)
+allCards.forEach((card) => main.appendChild(card))
+
