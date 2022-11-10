@@ -1,47 +1,37 @@
-const pictureData = [
+const wordData = [
   {
-    image: './img/apple.svg',
+    image: './img/apple.jpg',
     text: "Apple"
   },
   {
-    image: './img/bear.svg',
+    image: './img/bear.jpg',
     text: "Bear"
   },
   {
-    image: './img/cat.svg',
+    image: './img/cat.jpg',
     text: "Cat"
   },
   {
-    image: './img/dog.svg',
+    image: './img/dog.jpg',
     text: "Dog"
   },
   {
-    image: './img/elephant.svg',
+    image: './img/elephant.jpg',
     text: "Elephant"
   },
   {
-    image: './img/fish.svg',
+    image: './img/fish.jpg',
     text: "Fish"
-  },
-  {
-    image: './img/grapes.svg',
-    text: "Grapes"
-  },
-  {
-    image: './img/house.svg',
-    text: "House"
   },
 ];
 
 const letterData = [
-    { text: "Aa" },
-    { text: "Bb" },
-    { text: "Cc" },
-    { text: "Dd" },
-    { text: "Ee" },
-    { text: "Ff" },
-    { text: "Gg" },
-    { text: "Hh" },
+    "Aa",
+    "Bb",
+    "Cc",
+    "Dd",
+    "Ee",
+    "Ff",
 ]
 
 

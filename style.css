@@ -32,7 +32,7 @@ main {
     transition: transform 0.4s ease;
 }
 
-.card.show-answer .inner-card {
+.card.revealed .inner-card {
     transform: rotateY(180deg);
 }
 
