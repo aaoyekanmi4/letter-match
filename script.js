@@ -1,10 +1,11 @@
 const main = document.querySelector('main')
 
 const message = new SpeechSynthesisUtterance();
+const success = new Audio('/sounds/success-sound.mp3');
 
 const letterCards = [];
 const wordCards = [];
-const revealedCards = [];
+const lastRevealed = [];
 let wordCardRevealed = false;
 let letterCardRevealed = false;
 
@@ -32,30 +33,43 @@ function speakText () {
   speechSynthesis.speak(message)
 }
 
-const lettersMatch = (cardsList) => {
-  return cardsList[0][0] === cardsList[1][0]
+const lettersMatch = () => {
+  const comparisonTexts= []
+  lastRevealed.forEach((card) => {
+    const text = card.querySelector('p').innerText
+    comparisonTexts.push(text)
+  })
+  return  comparisonTexts[0][0] === comparisonTexts[1][0]
 }
 
 //check for match
 const checkForMatch = () => {
-const cards = document.querySelectorAll('.card')
+  const cards = document.querySelectorAll('.card')
+
   cards.forEach((card) => card.classList.remove('clickable'))
-  const revealedCardsList = document.querySelectorAll('.revealed')
 
-  if ((wordCardRevealed && letterCardRevealed) && lettersMatch(revealedCardsList)) {
+  if ((wordCardRevealed && letterCardRevealed) && lettersMatch(lastRevealed)) {
+    //lastRevealed add class to show match
+    setTimeout(() => {
+      success.play()
+      lastRevealed.forEach((card) => card.classList.add('matched'))
 
-  //revealedCards add class to show match
-    revealedCardsList.forEach((card) => card.classList.add('matched'))
-  //play success sound
-  //remove cards from dom
-  //put clickable back on all cards
-  //toggle revealed on revealed list
+    }, 1400)
+  } else {
+    setTimeout(() => {
+      lastRevealed.forEach((card) => card.classList.remove('revealed'))
+    }, 1400)
+
   }
+  setTimeout(() => {
+    lastRevealed.length = 0
+    cards.forEach((card) => {
+    if (!(card.classList.contains('matched'))) {
+      card.classList.add('clickable')
+     }
+    })
+  }, 1500)
 
-//else play sound for being wrong
-  //toggle revealed on revealed list
-//flip cards back over
-//put clickable back on all cards
 }
 
 const createLetterCard = (letter) => {
@@ -82,8 +96,8 @@ const createLetterCard = (letter) => {
       letterCardRevealed = true;
       setTextMessage(letter[0])
        setTimeout(speakText, 400)
-      revealedCards.push(card)
-      if (revealedCards.length === 2) checkForMatch()
+      lastRevealed.push(card)
+      if (lastRevealed.length === 2) checkForMatch()
 
     }
   })
@@ -117,9 +131,9 @@ const createWordCard = (data) => {
       wordCardRevealed = true;
       setTextMessage(text)
       setTimeout(speakText, 400)
-      revealedCards.push(card)
+      lastRevealed.push(card)
       //change to use NodeListwww
-      if (revealedCards.length === 2) checkForMatch()
+      if (lastRevealed.length === 2) checkForMatch()
     }
   })
 
@@ -131,6 +145,6 @@ letterData.forEach((letter) => createLetterCard(letter))
 wordData.forEach((word) => createWordCard(word))
 
 const allCards = [...letterCards, ...wordCards]
-// shuffle(allCards)
+shuffle(allCards)
 allCards.forEach((card) => main.appendChild(card))
 
