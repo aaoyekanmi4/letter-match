@@ -1,4 +1,5 @@
 const main = document.querySelector('main')
+const lettersSelect = document.getElementById('select-letters');
 
 const message = new SpeechSynthesisUtterance();
 const success = new Audio('/sounds/success-sound.mp3');
@@ -127,37 +128,61 @@ const shuffle = (array) => {
   }
 };
 
-// Show cards from letter select
+// helper to get indices from select option
+const getIndicesRange = (start, end) => {
+  const indexArray = []
+  for (let i = start; i <= end; i++) {
+    indexArray.push(i)
+  }
+  return indexArray
+}
+
+// return letter/word indices from selected option
 const getDataIndices = () => {
-  // const indexArray = []
-  // for let i = startIdx; i <= endIdx; i++
-  // indexArray.push(i)
-  // get selected option value
-  //use option value to calculate
-  //if value < 4
-  //startIdx = (value * 6)
-  //endIdx = (startIdx + 6) -1
-  //if value === 5 startIdx = 20 endIdx = 25
-  //if value > 5
-  // //for (let i = 0; i < 6; i++) {
-  // const chosenIndices = new Set()
-  // const nums = new Set();
-// while(nums.size !== 6) {
-//   nums.add(Math.floor(Math.random() * 25) + 1);
-// }
-  // }
-  //return indexArray
+  let startIdx;
+  let endIdx;
+  const optionIdx = Number(lettersSelect.selectedIndex)
+
+  if (optionIdx < 4) {
+    startIdx = optionIdx * 6
+    endIdx = (startIdx + 6) - 1
+    return getIndicesRange(startIdx, endIdx)
+  } else if (optionIdx === 4) {
+    return getIndicesRange(20, 25)
+  } else {
+    const chosenIndices = new Set()
+    while(chosenIndices.size < 6) {
+      chosenIndices.add(Math.floor(Math.random() * 25) + 1);
+    }
+    return [...chosenIndices]
+  }
 }
 
 const getCardData = () => {
- //map over indexArray
-  // for both letterdata and wordata and get values at each index
-  //return data
+  const indices = getDataIndices();
+  const cardData = []
+   indices.forEach((val) => {
+    cardData.push(letterData[val])
+    cardData.push(wordData[val])
+   })
+  return cardData
 }
 
+lettersSelect.addEventListener('change', () => {
+  main.innerHTML = ''
+  allCards.length = 0
+    const cardData = getCardData();
+    cardData.forEach((val) => createCard(val))
+
+    shuffle(allCards)
+    allCards.forEach((card) => main.appendChild(card))
+
+})
+
+const cardData = getCardData();
+
 //this will be one for each for cardData, and next for lines will be in an init function
-letterData.forEach((letter) => createCard(letter))
-wordData.forEach((word) => createCard(word))
+cardData.forEach((val) => createCard(val))
 
 shuffle(allCards)
 allCards.forEach((card) => main.appendChild(card))
