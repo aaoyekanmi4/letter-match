@@ -34,34 +34,7 @@ const wordData = words.map((word) => {
   return {image: `./img/${word}.jpg`, text: upperCasedWord}
 })
 
-const letterData = [
-  "Aa",
-  "Bb",
-  "Cc",
-  "Dd",
-  "Ee",
-  "Ff",
-  "Gg",
-  "Hh",
-  "Ii",
-  "Jj",
-  "Kk",
-  "Ll",
-  "Mm",
-  "Nn",
-  "Oo",
-  "Pp",
-  "Qq",
-  "Rr",
-  "Ss",
-  "Tt",
-  "Uu",
-  "Vv",
-  "Ww",
-  "Xx",
-  "Yy",
-  "Zz"
-]
+const letterData = words.map((word) => word[0].toUpperCase() + word[0])
 
 
 
