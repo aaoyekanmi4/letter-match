@@ -12,7 +12,6 @@ function setTextMessage (text) {
   message.text = text;
 }
 
-
 function speakText () {
   speechSynthesis.speak(message)
 }
@@ -21,6 +20,7 @@ const readMessage = (data) => {
   typeof data === 'string' ? setTextMessage(data[0]) : setTextMessage(data.text)
   setTimeout(speakText, 400)
 }
+
 // Match Functions
 const lettersMatch = () => {
   const cardOneFirstLetter = lastRevealedCards[0].querySelector('p').innerText[0]
@@ -42,6 +42,7 @@ const checkForMatch = () => {
       lastRevealedCards.forEach((card) => card.classList.remove('revealed'))
     }, 1400)
   }
+
   setTimeout(() => {
     lastRevealedCards.length = 0
     cards.forEach((card) => {
@@ -110,7 +111,6 @@ const createCard = (data) => {
       }, 2000)
     }
   })
-
   allCards.push(card)
 }
 
@@ -127,6 +127,35 @@ const shuffle = (array) => {
   }
 };
 
+// Show cards from letter select
+const getDataIndices = () => {
+  // const indexArray = []
+  // for let i = startIdx; i <= endIdx; i++
+  // indexArray.push(i)
+  // get selected option value
+  //use option value to calculate
+  //if value < 4
+  //startIdx = (value * 6)
+  //endIdx = (startIdx + 6) -1
+  //if value === 5 startIdx = 20 endIdx = 25
+  //if value > 5
+  // //for (let i = 0; i < 6; i++) {
+  // const chosenIndices = new Set()
+  // const nums = new Set();
+// while(nums.size !== 6) {
+//   nums.add(Math.floor(Math.random() * 25) + 1);
+// }
+  // }
+  //return indexArray
+}
+
+const getCardData = () => {
+ //map over indexArray
+  // for both letterdata and wordata and get values at each index
+  //return data
+}
+
+//this will be one for each for cardData, and next for lines will be in an init function
 letterData.forEach((letter) => createCard(letter))
 wordData.forEach((word) => createCard(word))
 
