@@ -20,12 +20,42 @@
                 <option>S - X</option>
                 <option>U - Z</option>
                 <option>Random</option>
+                <option>All</option>
             </select>
         </label>
     </header>
-    <main>
+    <main></main>
+        <!-- Modal -->
+        <div class="modal-container" id="modal">
+            <div class="modal">
+                <div class="modal-content">
+                    <div class="congrats">
+                        <div class="popper popper-left">🎉</div>
+                        <h2>Great Job!</h2>
+                        <div class="popper popper-right">🎉</div>
+                    </div>
+                    <h3 class="ask">Play Again?</h3>
+                    <label for="select-reset" class="reset-label">
+                        Select letters:
+                        <select class="select-letters" id="select-reset">
+                            <option>A - F</option>
+                            <option>G - L</option>
+                            <option>M - R</option>
+                            <option>S - X</option>
+                            <option>U - Z</option>
+                            <option>Random</option>
+                            <option>All</option>
+                        </select>
+                    </label>
+                    <div class="reset-container">
+                        <button class="reset" id="reset-button">
+                            Start!
+                        </button>
+                    </div>
 
-    </main>
+                </div>
+            </div>
+        </div>
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>

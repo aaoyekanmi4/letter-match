@@ -1,5 +1,8 @@
 const main = document.querySelector('main')
 const lettersSelect = document.getElementById('select-letters');
+const resetSelect = document.getElementById('select-reset')
+const modal = document.getElementById('modal')
+const resetButton = document.getElementById('reset-button')
 
 const message = new SpeechSynthesisUtterance();
 const success = new Audio('/sounds/success-sound.mp3');
@@ -52,13 +55,13 @@ const checkForMatch = () => {
      }
     })
   }, 1500)
-
 }
 
 const checkForGameOver = () => {
   const matchedCards = document.querySelectorAll('.matched')
   const cards = document.querySelectorAll('.card')
   if (matchedCards.length === cards.length) {
+    modal.classList.add('show-modal')
     gameWon.play()
   }
 }
@@ -70,17 +73,17 @@ const createInnerCardHTML = (data) => {
         const firstLetter = text[0]
         const remaningLetters = text.slice(1)
         return `<div class="inner-card-back picture">
-                    <img class="pic" src="${image}"/>
-                    <p>
-                        <span class="first">${firstLetter}</span>
-                        <span class="rest">${remaningLetters}</span>
-                    </p>
+                  <img class="pic" src="${image}"/>
+                  <p>
+                    <span class="first">${firstLetter}</span>
+                    <span class="rest">${remaningLetters}</span>
+                  </p>
                 </div>`
     } else {
         return `<div class="inner-card-back letter">
-                    <p>
-                        ${data}
-                    </p>
+                  <p>
+                    ${data}
+                  </p>
                 </div>`
     }
 }
@@ -91,11 +94,11 @@ const createCard = (data) => {
 
   card.innerHTML = `
   <div class="inner-card">
-                <div class="inner-card-front">
-                    <img class='card-background' src="/img/card-background1.svg" />
-                </div>
-                   ${createInnerCardHTML(data)}
-            </div>
+    <div class="inner-card-front">
+      <img class='card-background' src="/img/card-background4.png" />
+    </div>
+    ${createInnerCardHTML(data)}
+  </div>
 `
   card.addEventListener('click', () => {
     if (card.classList.contains('clickable')) {
@@ -128,7 +131,7 @@ const shuffle = (array) => {
   }
 };
 
-// helper to get indices from select option
+// Select letter functions
 const getIndicesRange = (start, end) => {
   const indexArray = []
   for (let i = start; i <= end; i++) {
@@ -137,7 +140,6 @@ const getIndicesRange = (start, end) => {
   return indexArray
 }
 
-// return letter/word indices from selected option
 const getDataIndices = () => {
   let startIdx;
   let endIdx;
@@ -149,17 +151,20 @@ const getDataIndices = () => {
     return getIndicesRange(startIdx, endIdx)
   } else if (optionIdx === 4) {
     return getIndicesRange(20, 25)
-  } else {
+  } else if (optionIdx === 5) {
     const chosenIndices = new Set()
-    while(chosenIndices.size < 6) {
-      chosenIndices.add(Math.floor(Math.random() * 25) + 1);
+    while (chosenIndices.size < 6) {
+      chosenIndices.add(Math.floor(Math.random() * 25) + 1)
     }
     return [...chosenIndices]
+  } else {
+    return
   }
 }
 
 const getCardData = () => {
   const indices = getDataIndices();
+  if (!indices) return [...letterData, ...wordData]
   const cardData = []
    indices.forEach((val) => {
     cardData.push(letterData[val])
@@ -168,22 +173,33 @@ const getCardData = () => {
   return cardData
 }
 
-lettersSelect.addEventListener('change', () => {
+function displayCards () {
+  const cardData = getCardData();
+  cardData.forEach((val) => createCard(val))
+  shuffle(allCards)
+  allCards.forEach((card) => main.appendChild(card))
+}
+
+function resetGame () {
   main.innerHTML = ''
   allCards.length = 0
-    const cardData = getCardData();
-    cardData.forEach((val) => createCard(val))
+  lastRevealedCards.length = 0
+  modal.classList.remove('show-modal')
+  displayCards();
+}
 
-    shuffle(allCards)
-    allCards.forEach((card) => main.appendChild(card))
-
+resetSelect.addEventListener('change', () => {
+  lettersSelect.selectedIndex = resetSelect.selectedIndex
 })
 
-const cardData = getCardData();
+lettersSelect.addEventListener('change', () => {
+  resetSelect.selectedIndex = lettersSelect.selectedIndex
+  resetGame();
+})
 
-//this will be one for each for cardData, and next for lines will be in an init function
-cardData.forEach((val) => createCard(val))
+resetButton.addEventListener('click', () => {
+  resetGame();
+})
 
-shuffle(allCards)
-allCards.forEach((card) => main.appendChild(card))
+displayCards();
 

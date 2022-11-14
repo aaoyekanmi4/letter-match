@@ -8,7 +8,7 @@ const words = [
   'grapes',
   'house',
   'ice',
-  'jug',
+  'jar',
   'kangaroo',
   'lion',
   'moose',
@@ -35,6 +35,3 @@ const wordData = words.map((word) => {
 })
 
 const letterData = words.map((word) => word[0].toUpperCase() + word[0])
-
-
-
