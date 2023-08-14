@@ -95,7 +95,7 @@ const createCard = (data) => {
   card.innerHTML = `
   <div class="inner-card">
     <div class="inner-card-front">
-      <img class='card-background' src="img/card-background4.png" />
+      <img class='card-background' src="./img/card-background4.png" />
     </div>
     ${createInnerCardHTML(data)}
   </div>
