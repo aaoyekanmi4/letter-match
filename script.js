@@ -5,8 +5,8 @@ const modal = document.getElementById('modal')
 const resetButton = document.getElementById('reset-button')
 
 const message = new SpeechSynthesisUtterance();
-const success = new Audio('/sounds/success-sound.mp3');
-const gameWon = new Audio('/sounds/Tada-sound.mp3');
+const success = new Audio('./sounds/success-sound.mp3');
+const gameWon = new Audio('./sounds/Tada-sound.mp3');
 
 const allCards = []
 const lastRevealedCards = [];
