@@ -118,7 +118,7 @@ const createCard = (data) => {
   allCards.push(card)
 }
 
-// Randomize Cards
+// Randomize Cards - Fischer Yates
 const shuffle = (array) => {
   let j = 0
   let temp = null;
